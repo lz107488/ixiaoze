@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+  
+  <entry>
+    <title>如何解决Mobax链接不上虚拟机问题</title>
+    <link href="/ixiaoze/2022/11/22/%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3MobaX%E9%93%BE%E6%8E%A5%E4%B8%8D%E4%B8%8A%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%97%AE%E9%A2%98/"/>
+    <url>/ixiaoze/2022/11/22/%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3MobaX%E9%93%BE%E6%8E%A5%E4%B8%8D%E4%B8%8A%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%97%AE%E9%A2%98/</url>
+    
+    <content type="html"><![CDATA[<h3 id="如何解决Mobax连接问题"><a href="#如何解决Mobax连接问题" class="headerlink" title="如何解决Mobax连接问题"></a>如何解决Mobax连接问题</h3><p>连接超时问题</p><p><img src="https://img-blog.csdnimg.cn/20210930152051127.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBAU2lvYmhhbi4gID8=,size_11,color_FFFFFF,t_70,g_se,x_16" alt="img"></p><p>原因可能有：</p><p>1.linux系统上有没有安装ssh</p><p>直接输入命令 ：ssh</p><p>没有此ssh的话会提示command not find</p><p>可用下载命令进行安装</p><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">sudo yum ssh <span class="hljs-keyword">install</span><br></code></pre></td></tr></table></figure><p>2.虚拟机无vm1 或vm8 等虚拟网卡</p><p>可点击vm(我使用的虚拟机是vm)的编辑按钮打开虚拟网络编辑器进行编辑。</p><p>再然后找到pc机上的控制面板\网络和 Internet\网络连接这个路径编辑VMnet8，右键打开属性按钮进行设置:</p><p><img src="https://img-blog.csdnimg.cn/e69c0ad1bb71407bb7601507c20b381e.png#pic_center" alt="img"></p><p>点击tcp&#x2F;ipv4按钮进行手动设置ip也可以设置DNS为8.8.8.8等.(注：这里的设置ip应与虚拟网络编辑器vmnet8的ip前三位一致)</p><p><img src="https://img-blog.csdnimg.cn/81d45db7160c49bdb1e7c63ea0d22d2d.png#pic_center" alt="img"></p><p><img src="https://img-blog.csdnimg.cn/0e0d33feff5840aca226663953c55558.png#pic_center" alt="img"></p><h5 id="设置虚拟机的ifcfg-eth33配置文件"><a href="#设置虚拟机的ifcfg-eth33配置文件" class="headerlink" title="设置虚拟机的ifcfg-eth33配置文件"></a>设置虚拟机的ifcfg-eth33配置文件</h5><p>这个文件所在位置：&#x2F;etc&#x2F;sysconfig&#x2F;network-scripts，在前面加cd 命令即可跳转到该文件夹</p><p><img src="https://img-blog.csdnimg.cn/40734f152ac64e95b5c2259bde619147.png#pic_center" alt="在这里插入图片描述"></p><p>vim ifcfg-ens33文件进行配置 然后 esc 退出 :wq进行文件保存</p><p><img src="https://img-blog.csdnimg.cn/12a228ce652e4bfc97582e87a37ea01b.png#pic_center" alt="在这里插入图片描述"></p><p>设置完成后 进行测试ping 百度 和ping vmnet8(就之前所设置的ip)是否能够ping通，能够ping通，MobaX就可以连接。</p><p><img src="https://img-blog.csdnimg.cn/9d9d87a361454b46b971642fe1aace6c.png#pic_center" alt="在这里插入图片描述"></p><p><img src="https://img-blog.csdnimg.cn/6910cfa199a042dcade20f72e582188a.png#pic_center" alt="在这里插入图片描述"></p><p>如若ping不同如当前所示。（我所遇到的就是这种）本人是直接重启pc机(果然重启能够解决90%的问题哈。。。)然后用pc机ping 了虚拟机就ping 通了（注：这里的192.168.200.4仅为演示，我当初的ip也为192.168.200.1）</p><p><img src="https://img-blog.csdnimg.cn/855a1ecb28674b2ebf4fb16d9a1af0ce.png#pic_center" alt="在这里插入图片描述"></p><p><img src="https://img-blog.csdnimg.cn/96093ace15864904aabb139c01ce1419.png#pic_center" alt="在这里插入图片描述"></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Mobax</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>pc</tag>
+      
+      <tag>Vm</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>标题</title>
+    <link href="/ixiaoze/2022/11/20/%E6%A0%87%E9%A2%98/"/>
+    <url>/ixiaoze/2022/11/20/%E6%A0%87%E9%A2%98/</url>
+    
+    <content type="html"><![CDATA[<h1 id="我的第一篇博客"><a href="#我的第一篇博客" class="headerlink" title="我的第一篇博客"></a>我的第一篇博客</h1><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs markdown"><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;label label-primary&quot;</span>&gt;</span></span>Label<span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span></span><br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>Java</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>PS3</tag>
+      
+      <tag>Games</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  
+</search>
