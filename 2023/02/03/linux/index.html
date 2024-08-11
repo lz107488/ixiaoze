@@ -1,0 +1,802 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=dark>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/ixiaoze/">
+  <link rel="icon" href="/ixiaoze/img/xiaoze.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="longz">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="ruoyi项目前后端分离版本部署-linux系统系统环境需求 123456JDK &gt;&#x3D; 1.8MySQL &gt;&#x3D; 5.7Maven &gt;&#x3D; 3.0RedisNode.jsNginx   新建目录 123456#tmp存放临时安装包mkdir -p &#x2F;data&#x2F;tmp#service存放软件环境mkdir -p &#x2F;data&#x2F;service#gitee存放代码版本控制库mkdir -p">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ruoyi项目前后端分离版本部署-linux系统">
+<meta property="og:url" content="https://lz107488.github.io/ixiaoze/2023/02/03/linux/index.html">
+<meta property="og:site_name" content="小泽">
+<meta property="og:description" content="ruoyi项目前后端分离版本部署-linux系统系统环境需求 123456JDK &gt;&#x3D; 1.8MySQL &gt;&#x3D; 5.7Maven &gt;&#x3D; 3.0RedisNode.jsNginx   新建目录 123456#tmp存放临时安装包mkdir -p &#x2F;data&#x2F;tmp#service存放软件环境mkdir -p &#x2F;data&#x2F;service#gitee存放代码版本控制库mkdir -p">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-02-03T08:12:21.000Z">
+<meta property="article:modified_time" content="2023-02-03T08:28:48.437Z">
+<meta property="article:author" content="longz">
+<meta property="article:tag" content="java,linux">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>ruoyi项目前后端分离版本部署-linux系统 - 小泽</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/ixiaoze/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/ixiaoze/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/ixiaoze/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"lz107488.github.io","root":"/ixiaoze/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":true,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/ixiaoze/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/ixiaoze/js/utils.js" ></script>
+  <script  src="/ixiaoze/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/ixiaoze/">
+      <strong>小泽</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/ixiaoze/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/ixiaoze/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/ixiaoze/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/ixiaoze/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/ixiaoze/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/ixiaoze/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/ixiaoze/img/default.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="ruoyi项目前后端分离版本部署-linux系统"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-02-03 16:12" pubdate>
+          2023年2月3日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          52 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="busuanzi_container_page_pv" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="busuanzi_value_page_pv"></span> 次
+        </span>
+        
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">ruoyi项目前后端分离版本部署-linux系统</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h3 id="ruoyi项目前后端分离版本部署-linux系统"><a href="#ruoyi项目前后端分离版本部署-linux系统" class="headerlink" title="ruoyi项目前后端分离版本部署-linux系统"></a><strong>ruoyi项目前后端分离版本部署-linux系统</strong></h3><p><strong>系统环境需求</strong></p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">JDK</span> &gt;= <span class="hljs-number">1</span>.<span class="hljs-number">8</span><br><span class="hljs-attribute">MySQL</span> &gt;= <span class="hljs-number">5</span>.<span class="hljs-number">7</span><br><span class="hljs-attribute">Maven</span> &gt;= <span class="hljs-number">3</span>.<span class="hljs-number">0</span><br><span class="hljs-attribute">Redis</span><br><span class="hljs-attribute">Node</span>.js<br><span class="hljs-attribute">Nginx</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>新建目录</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-comment">#tmp存放临时安装包</span><br>mkdir -p <span class="hljs-regexp">/data/</span>tmp<br><span class="hljs-comment">#service存放软件环境</span><br>mkdir -p <span class="hljs-regexp">/data/</span>service<br><span class="hljs-comment">#gitee存放代码版本控制库</span><br>mkdir -p <span class="hljs-regexp">/data/gi</span>tee<br></code></pre></td></tr></table></figure>
+
+<p>以上目录非必须，可以自行选择安装路径。</p>
+</li>
+<li><p>JDK &gt;&#x3D; 1.8 (推荐1.8版本)</p>
+<p>从oracle官方网站上下载1.8版本中的最新版的JDK。下载完成后，把文件通过WinSCP或者XFTP上传到服务器上。接着进行解压和配置环境变量。</p>
+<p>下载地址：<a target="_blank" rel="noopener" href="https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html">https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html</a></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-comment">#进入安装包目录，解压</span><br>cd <span class="hljs-regexp">/data/</span>tmp<br>tar -zxvf jdk-<span class="hljs-number">8</span>u261-linux-x64.tar.gz<br><br><span class="hljs-comment">#把解压出来的文件夹转移到统一的地方</span><br>mv <span class="hljs-regexp">/data/</span>tmp<span class="hljs-regexp">/jdk1.8.0_261 /</span>data<span class="hljs-regexp">/service/</span>jdk1.<span class="hljs-number">8.0</span>_261<br><br><span class="hljs-comment">#修改环境变量/etc/profile，JAVA_HOME修改为自己的jdk路径。</span><br>vim <span class="hljs-regexp">/etc/</span>profile<br>export  JAVA_HOME=<span class="hljs-regexp">/data/</span>service/jdk1.<span class="hljs-number">8.0</span>_261<br>export  PATH=<span class="hljs-variable">$PATH</span>:<span class="hljs-variable">$JAVA_HOME</span>/bin<br><br><span class="hljs-comment">#使环境变量生效</span><br>source <span class="hljs-regexp">/etc/</span>profile<br><br><span class="hljs-comment">#检查是否配置成功</span><br>java -version<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>Maven &gt;&#x3D; 3.0</p>
+<p>从Maven官方网站上下载最新版的压缩包。下载完成后，进行解压和配置环境变量。</p>
+<p>下载地址：<a target="_blank" rel="noopener" href="https://maven.apache.org/download.cgi">https://maven.apache.org/download.cgi</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#进入安装包目录，解压</span><br><span class="hljs-built_in">cd</span> /data/tmp<br>tar -zxvf apache-maven-3.6.3-bin.tar.gz<br><span class="hljs-built_in">mv</span> apache-maven-3.6.3 /data/service/<br><br><span class="hljs-comment">#修改环境变量/etc/profile，MAVEN_HOME修改为自己的路径。</span><br><span class="hljs-built_in">export</span>  MAVEN_HOME=/data/service/apache-maven-3.6.3<br><span class="hljs-built_in">export</span>  PATH=<span class="hljs-variable">$PATH</span>:<span class="hljs-variable">$MAVEN_HOME</span>/bin<br><br><span class="hljs-comment">#使环境变量生效</span><br><span class="hljs-built_in">source</span> /etc/profile<br><br><span class="hljs-comment">#检查是否配置成功</span><br>mvn -v<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>Git</p>
+<p>从git官方网站上下载最新版的安装包，安装即可。</p>
+<p>下载地址：<a target="_blank" rel="noopener" href="https://git-scm.com/">https://git-scm.com/</a></p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs applescript"><span class="hljs-comment">#通过yum安装，本方法最简单。但是无法控制安装的版本</span><br>yum -y install git<br><br><span class="hljs-comment">#检查是否配置成功</span><br>git <span class="hljs-comment">--version</span><br></code></pre></td></tr></table></figure>
+
+<p>安装之后，在git仓库中需要添加SSH公钥</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs arcade">ssh-keygen -t rsa -C <span class="hljs-string">&quot;xx@xx.com&quot;</span><br>cat ~<span class="hljs-regexp">/.ssh/i</span>d_rsa.pub<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>安装docker</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs livescript"><span class="hljs-comment">#卸载旧版本</span><br>sudo yum remove docker <span class="hljs-string">\</span><br>                  docker-client <span class="hljs-string">\</span><br>                  docker-client-latest <span class="hljs-string">\</span><br>                  docker-common <span class="hljs-string">\</span><br>                  docker-latest <span class="hljs-string">\</span><br>                  docker-latest-logrotate <span class="hljs-string">\</span><br>                  docker-logrotate <span class="hljs-string">\</span><br>                  docker-engine<br><span class="hljs-comment">#安装 Docker Engine-Community</span><br>sudo yum install -y yum-utils device-mapper-persistent-data lvm2<br>sudo yum-config-manager <span class="hljs-string">\</span><br>    --add-repo <span class="hljs-string">\</span><br>    http:<span class="hljs-regexp">//mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</span><br><span class="hljs-regexp">sudo yum install docker-ce docker-ce-cli containerd.io</span><br><span class="hljs-regexp">sudo systemctl start docker</span><br></code></pre></td></tr></table></figure>
+
+<p>注意：如果安装docker-ce报错，可以执行以下语句，再进行安装。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">yum install https:<span class="hljs-regexp">//</span>download.docker.com<span class="hljs-regexp">/linux/</span>fedora<span class="hljs-regexp">/30/</span>x86_64<span class="hljs-regexp">/stable/</span>Packages/containerd.io-<span class="hljs-number">1.2</span>.<span class="hljs-number">6</span>-<span class="hljs-number">3.3</span>.fc30.x86_64.rpm<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>Mysql &gt;&#x3D; 5.7 在本机能够有自己的mysql </p>
+<p>安装教程：<a target="_blank" rel="noopener" href="https://www.runoob.com/mysql/mysql-install.html">https://www.runoob.com/mysql/mysql-install.html</a></p>
+<p>下载地址：<a target="_blank" rel="noopener" href="https://dev.mysql.com/downloads/mysql/">https://dev.mysql.com/downloads/mysql/</a></p>
+<p>访问Mysql的可视化数据库开发工具： Navicat Premium 工具的安装教程可自行百度搜索。	</p>
+<p>在Docker中安装MySQL。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-comment">#查看可用的 MySQL 版本</span><br>docker search mysql<br><span class="hljs-comment">#拉取5.7版本</span><br>docker pull mysql:<span class="hljs-number">5.7</span><br><span class="hljs-comment">#创建配置文件目录</span><br>mkdir -p <span class="hljs-regexp">/data/</span>docker<span class="hljs-regexp">/mysql/</span>conf<br><span class="hljs-comment">#进入配置文件目录，添加一个配置文件</span><br>vim my.cnf<br><span class="hljs-comment">#启动镜像</span><br>docker run -p <span class="hljs-number">3306</span>:<span class="hljs-number">3306</span> --name mysql -v <span class="hljs-regexp">/data/</span>docker<span class="hljs-regexp">/mysql/</span>conf:<span class="hljs-regexp">/etc/my</span>sql/conf.d -e MYSQL_ROOT_PASSWORD=Vv0IBQ5qST -d mysql:<span class="hljs-number">5.7</span><br></code></pre></td></tr></table></figure>
+
+<p>注意1：MySQL(5.7.19)的默认配置文件是 &#x2F;etc&#x2F;mysql&#x2F;my.cnf 文件。如果想要自定义配置，建议向 &#x2F;etc&#x2F;mysql&#x2F;conf.d 目录中创建 .cnf 文件。新建的文件可以任意起名，只要保证后缀名是 cnf 即可。</p>
+<p>注意2：在mysql的镜像启动之前，创建配置文件目录，并放置好配置文件。这样mysql启动的时候，就可以直接使用配置好的参数。以下内容是配置数据库的字符集为utf-8。</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[mysqld]</span><br><span class="hljs-attr">character-set-server</span>=utf8<br><br><span class="hljs-section">[mysql]</span><br><span class="hljs-attr">default-character-set</span>=utf8<br></code></pre></td></tr></table></figure>
+
+<p>注意3：如果使用docker进入mysql数据库执行包含中文的sql语句，出现中文乱码的情况，需要在容器系统中设置使用中文包。所以进入docker容器时需要设置环境语言：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment">#进入docker容器设置env LANG=C.UTF-8</span><br>docker <span class="hljs-built_in">exec</span> -it mysql <span class="hljs-built_in">env</span> LANG=C.UTF-8 bash<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>Redis</p>
+<p>安装教程：<a target="_blank" rel="noopener" href="https://www.runoob.com/redis/redis-install.html">https://www.runoob.com/redis/redis-install.html</a></p>
+<p>下载地址：<a target="_blank" rel="noopener" href="https://github.com/tporadowski/redis/releases">https://github.com/tporadowski/redis/releases</a></p>
+<p>Redis可视化管理工具：[AnotherRedisDesktopManager]:(<a target="_blank" rel="noopener" href="https://github.com/qishibo/AnotherRedisDesktopManager/releases">https://github.com/qishibo/AnotherRedisDesktopManager/releases</a>)</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">docker</span> pull redis:latest<br><span class="hljs-attribute">docker</span> run -itd --name redis-test -p <span class="hljs-number">6379</span>:<span class="hljs-number">6379</span> redis<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>Node.js</p>
+<p>安装教程：<a target="_blank" rel="noopener" href="https://www.runoob.com/nodejs/nodejs-install-setup.html">https://www.runoob.com/nodejs/nodejs-install-setup.html</a></p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">tar xf  <span class="hljs-keyword">node</span><span class="hljs-title">-v14</span>.<span class="hljs-number">15.4</span>-linux-x64.tar.xz       // 解压<br>cd <span class="hljs-keyword">node</span><span class="hljs-title">-v14</span>.<span class="hljs-number">15.4</span>-linux-x64/                  // 进入解压目录<br>./bin/<span class="hljs-keyword">node</span> <span class="hljs-title">-v</span>                               // 执行<span class="hljs-keyword">node</span><span class="hljs-title">命令 查看版本</span><br><span class="hljs-title"></span><br><span class="hljs-title">//解压文件的 bin</span> 目录底下包含了 <span class="hljs-keyword">node</span><span class="hljs-title">、npm</span> 等命令，我们可以使用 ln 命令来设置软连接：<br>mv /data/tmp/<span class="hljs-keyword">node</span><span class="hljs-title">-v14</span>.<span class="hljs-number">15.4</span>-linux-x64 /data/service/<br>ln -s /data/service/<span class="hljs-keyword">node</span><span class="hljs-title">-v14</span>.<span class="hljs-number">15.4</span>-linux-x64/bin/npm   /usr/local/bin/ <br>ln -s /data/service/<span class="hljs-keyword">node</span><span class="hljs-title">-v14</span>.<span class="hljs-number">15.4</span>-linux-x64/bin/<span class="hljs-keyword">node</span>   <span class="hljs-title">/usr</span>/local/bin/<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>Nginx 安装</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-comment">#首先安装nginx前置软件</span><br>yum -y install gcc pcre-devel zlib-devel openssl openssl-devel<br><span class="hljs-comment">#下载nginx软件安装包</span><br>cd <span class="hljs-regexp">/data/</span>tmp<br>wget http:<span class="hljs-regexp">//</span>nginx.org<span class="hljs-regexp">/download/</span>nginx-<span class="hljs-number">1.19</span>.<span class="hljs-number">6</span>.tar.gz<br>tar -zxvf nginx-<span class="hljs-number">1.19</span>.<span class="hljs-number">6</span>.tar.gz<br>cd nginx-<span class="hljs-number">1.19</span>.<span class="hljs-number">6</span><br><span class="hljs-comment">#设置安装目录为/usr/local/nginx</span><br>.<span class="hljs-regexp">/configure --prefix=/u</span>sr<span class="hljs-regexp">/local/</span>nginx<br>make<br>make install<br><span class="hljs-comment">#启动nginx</span><br><span class="hljs-regexp">/usr/</span>local<span class="hljs-regexp">/nginx/</span>sbin/nginx<br></code></pre></td></tr></table></figure></li>
+</ul>
+<p><strong>后端部署步骤</strong></p>
+<ol>
+<li>从git仓库clone下来最新代码。ruoyi前后端分离版本的gitee地址是<a target="_blank" rel="noopener" href="https://gitee.com/y_project/RuoYi-Vuecl">https://gitee.com/y_project/RuoYi-Vuecl</a></li>
+</ol>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs crmsh"><span class="hljs-comment">#clone项目源代码</span><br>git <span class="hljs-keyword">clone</span> <span class="hljs-title">git</span>@gitee.com:y_project/RuoYi-Vue.git<br></code></pre></td></tr></table></figure>
+
+<p>注意：在clone代码之前，需要在gitee管理后台中添加服务器的SSH公钥。详见<a target="_blank" rel="noopener" href="https://gitee.com/help/articles/4191">https://gitee.com/help/articles/4191</a></p>
+<ol start="2">
+<li><p>使用可视化数据库开发工具 Navicat Premium进入数据库管理界面。创建数据库<code>ry-vue</code>并执行数据脚本<code>ry_2021xxxx.sql</code>，<code>quartz.sql</code></p>
+</li>
+<li><p>修改项目中的配置文件，配置文件有两个，分别是application.yml和application-druid.yml。</p>
+</li>
+</ol>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs awk">cd <span class="hljs-regexp">/data/gi</span>tee<span class="hljs-regexp">/RuoYi-Vue/</span>ruoyi-admin<span class="hljs-regexp">/src/m</span>ain<span class="hljs-regexp">/resources/</span><br><span class="hljs-comment">#修改application.yml的项目启动端口号</span><br>vim application.yml<br><span class="hljs-comment">#修改application-druid.yml的数据源</span><br>vim application.yml<br></code></pre></td></tr></table></figure>
+
+<p>修改application.yml的项目启动端口号，修改为18081。修改上传文件路径为&#x2F;data&#x2F;tmp</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs dts"><span class="hljs-symbol">server:</span><br><span class="hljs-symbol">	port:</span> <span class="hljs-number">18081</span><br><span class="hljs-symbol"></span><br><span class="hljs-symbol">ruoyi:</span><br><span class="hljs-symbol">	profile:</span> <span class="hljs-keyword">/data/</span>tmp<br><br><span class="hljs-meta"># redis 配置</span><br><span class="hljs-symbol">spring:</span><br><span class="hljs-symbol">	redis:</span><br>        <span class="hljs-meta"># 地址</span><br><span class="hljs-symbol">        host:</span> localhost<br>        <span class="hljs-meta"># 端口，默认为6379</span><br><span class="hljs-symbol">        port:</span> <span class="hljs-number">6379</span><br>        <span class="hljs-meta"># 数据库索引</span><br><span class="hljs-symbol">        database:</span> <span class="hljs-number">0</span><br>        <span class="hljs-meta"># 密码</span><br><span class="hljs-symbol">        password:</span> <br></code></pre></td></tr></table></figure>
+
+<p>修改application-druid.yml的数据源</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs dts"><span class="hljs-meta"># 数据源配置</span><br><span class="hljs-symbol">spring:</span><br><span class="hljs-symbol">    datasource:</span><br><span class="hljs-symbol">        type:</span> com.alibaba.druid.pool.DruidDataSource<br><span class="hljs-symbol">        driverClassName:</span> com.mysql.cj.jdbc.Driver<br><span class="hljs-symbol">        druid:</span><br>            <span class="hljs-meta"># 主库数据源</span><br><span class="hljs-symbol">            master:</span><br><span class="hljs-symbol">                url:</span> jdbc:mysql:<span class="hljs-comment">//localhost:3306/ry-vue?useUnicode=true&amp;characterEncoding=utf8&amp;zeroDateTimeBehavior=convertToNull&amp;useSSL=true&amp;serverTimezone=GMT%2B8</span><br><span class="hljs-symbol">                username:</span> root<br><span class="hljs-symbol">                password:</span> Vv0IBQ5qST<br></code></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>修改好项目的配置文件之后，把入口项目进行打包。通过mvn打包成一个可执行的jar包。</li>
+</ol>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">cd <span class="hljs-regexp">/data/gi</span>tee<span class="hljs-regexp">/RuoYi-Vue/</span><br>mvn clean install -pl com.ruoyi:ruoyi-admin -am<br></code></pre></td></tr></table></figure>
+
+<p>打包完成后，&#x2F;data&#x2F;gitee&#x2F;RuoYi-Vue&#x2F;ruoyi-admin&#x2F;target&#x2F;ruoyi-admin.jar就是打包完成后的jar包文件。</p>
+<ol start="5">
+<li><p>启动项目：把jar复制到程序目录，通过java命令行的方式启动jar包文件。因为本项目是使用了spring boot框架，所以jar中内置了web容器，不需要额外安装tomcat了。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs awk">mkdir -p <span class="hljs-regexp">/data/</span>app/ruoyi-vue<br>cp <span class="hljs-regexp">/data/gi</span>tee<span class="hljs-regexp">/RuoYi-Vue/</span>ruoyi-admin<span class="hljs-regexp">/target/</span>ruoyi-admin.jar <span class="hljs-regexp">/data/</span>app<span class="hljs-regexp">/ruoyi-vue/</span>ruoyi-admin.jar<br>cd <span class="hljs-regexp">/data/</span>app<span class="hljs-regexp">/ruoyi-vue/</span><br>nohup java -jar ruoyi-admin.jar &amp;<br></code></pre></td></tr></table></figure>
+
+<p>nohup和&amp;用来表示本命令需要在后台执行，这样退出命令行程序后，java程序也不会停止。</p>
+<ol start="6">
+<li>查看日志，验证项目是否成功运行。</li>
+</ol>
+</li>
+</ol>
+<p><strong>前端部署步骤</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 进入项目目录</span><br><span class="hljs-built_in">cd</span> /data/gitee/RuoYi-Vue/ruoyi-ui<br><br><span class="hljs-comment">#本地启动的话，可以在这里修改后端接口端口。如果是直接打包的话，不需要修改该配置文件</span><br>vim vue.config.js<br><br><span class="hljs-comment"># 打包正式环境</span><br>npm run build:prod<br><br><span class="hljs-built_in">mkdir</span> /data/app/ruoyi-ui<br><span class="hljs-built_in">mv</span> dist/* /data/app/ruoyi-ui/<br><br><span class="hljs-comment">#把生成好的 dist 文件夹的静态文件发布到你的 nginx 或者静态服务器即可，其中的 index.html 是后台服务的入口页面。</span><br>vim /usr/local/nginx/conf/nginx.conf<br><br>location / &#123;<br>            root   /data/app/ruoyi-ui;<br>			try_files <span class="hljs-variable">$uri</span> <span class="hljs-variable">$uri</span>/ /index.html;<br>            index  index.html index.htm;<br>        &#125;<br>        <br>location /prod-api/ &#123;<br>			proxy_set_header Host <span class="hljs-variable">$http_host</span>;<br>			proxy_set_header X-Real-IP <span class="hljs-variable">$remote_addr</span>;<br>			proxy_set_header REMOTE-HOST <span class="hljs-variable">$remote_addr</span>;<br>			proxy_set_header X-Forwarded-For <span class="hljs-variable">$proxy_add_x_forwarded_for</span>;<br>			proxy_pass http://localhost:18081/;<br>		&#125;<br><br><span class="hljs-comment">#重新加载配置文件nginx</span><br>/usr/local/nginx/sbin/nginx -s reload<br><br></code></pre></td></tr></table></figure>
+
+<p>打开浏览器，输入：<a target="_blank" rel="noopener" href="http://localhost(默认账户/%E5%AF%86%E7%A0%81">http://localhost（默认账户/密码</a> <code>admin/admin123</code>）<br>若能正确展示登录页面，并能成功登录，菜单及页面展示正常，则表明环境搭建成功。</p>
+<p>提示：node版本需要使用最新的稳定版本，v14.15.4之前的版本可能会打包失败。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/ixiaoze/categories/liunx/" class="category-chain-item">liunx</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/ixiaoze/tags/java-linux/">#java,linux</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>ruoyi项目前后端分离版本部署-linux系统</div>
+      <div>https://lz107488.github.io/ixiaoze/2023/02/03/linux/</div>
+    </div>
+    <div class="license-meta">
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年2月3日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/ixiaoze/2023/11/11/%E7%83%AD%E9%97%A8%E6%A1%86%E6%9E%B6-Maven%E7%AC%94%E8%AE%B0/" title="Maven 项目">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Maven 项目</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/ixiaoze/2022/11/22/%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3MobaX%E9%93%BE%E6%8E%A5%E4%B8%8D%E4%B8%8A%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%97%AE%E9%A2%98/" title="如何解决Mobax链接不上虚拟机问题">
+                        <span class="hidden-mobile">如何解决Mobax链接不上虚拟机问题</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>xiaoze</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/ixiaoze/js/events.js" ></script>
+<script  src="/ixiaoze/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/ixiaoze/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/ixiaoze/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/ixiaoze/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
